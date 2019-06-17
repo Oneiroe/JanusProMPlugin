@@ -2,6 +2,7 @@ package org.processmining.janus.plugins;
 
 import minerful.concept.ProcessModel;
 import minerful.io.encdec.declaremap.DeclareMapEncoderDecoder;
+import minerful.reactive.checking.MegaMatrixMonster;
 import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
@@ -12,7 +13,7 @@ import org.processmining.janus.help.JanusModelCheckerHelp;
 import org.processmining.plugins.declareminer.visualizing.DeclareMap;
 
 @Plugin(name = "Janus Declare Model Checker", parameterLabels = { "Event Log", "Declare Model", "Compliance Results" },
-		returnLabels = { "Compliance Results" }, returnTypes = { Object.class }, help = JanusModelCheckerHelp.TEXT)
+		returnLabels = { "Compliance Results" }, returnTypes = { MegaMatrixMonster.class }, help = JanusModelCheckerHelp.TEXT)
 
 public class JanusModelChecker extends JanusModelCheckerAlgorithm {
 
@@ -24,7 +25,7 @@ public class JanusModelChecker extends JanusModelCheckerAlgorithm {
 	 */
 	@UITopiaVariant(affiliation = "Vienna University of Economics and Business", author = "Alessio Cecconi", email = "alessio.cecconi@wu.ac.at")
 	@PluginVariant(variantLabel = "Janus Model Checker with dialog", requiredParameterLabels = { 0, 1 })
-	public Object parametricFlowUI(UIPluginContext context, XLog inputLog, DeclareMap model) {
+	public MegaMatrixMonster parametricFlowUI(UIPluginContext context, XLog inputLog, DeclareMap model) {
 		// undetermined progress bar
 		context.getProgress().setIndeterminate(true);
 		// Create default inputs.
@@ -43,7 +44,7 @@ public class JanusModelChecker extends JanusModelCheckerAlgorithm {
 		//		return null;
 	}
 
-	private Object runConnections(UIPluginContext context, XLog inputLog, ProcessModel model) {
+	private MegaMatrixMonster runConnections(UIPluginContext context, XLog inputLog, ProcessModel model) {
 		return insiderJarParametric(context, inputLog, model);
 	}
 }

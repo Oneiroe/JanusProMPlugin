@@ -26,7 +26,7 @@ public class JanusModelCheckerAlgorithm {
 	 *
 	 * @return
 	 */
-	public Object insiderJarParametric(PluginContext context, XLog inputLog, ProcessModel model) {
+	public MegaMatrixMonster insiderJarParametric(PluginContext context, XLog inputLog, ProcessModel model) {
 		JanusModelCheckStarter checkStarter = new JanusModelCheckStarter();
 
 		String[] args = new String[] {

@@ -23,6 +23,8 @@
         <!-- Third party library downloaded from maven repository. -->
         <!-- dependency conf="lib->default" org="org.reflections" name="reflections" rev="0.9.10" /-->
         <dependency conf="lib->default" org="prom-libs" name="OpenXES" rev="20160212" transitive="false"/>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+        <dependency org="org.apache.commons" name="commons-csv" rev="1.6"/>
         <!-- Third party library downloaded from ProM library. -->
         <!-- dependency conf="lib->default" org="prom-libs" name="opencsv" rev="2.4-patched" transitive="false" /-->
         <dependency org="" name="Janus" transitive="false"/>
