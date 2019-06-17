@@ -12,10 +12,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-@Plugin(name = "Janus Miner (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
+@Plugin(name = "DeclareMap model (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
 		"Process model", "Output File" }, userAccessible = true)
 @UIExportPlugin(description = "declare model as Json", extension = "json")
-public class JanusMinerJsonExport {
+public class DeclareMapJsonExport {
 
 	@PluginVariant(variantLabel = "Json export", requiredParameterLabels = { 0, 1 })
 	public void exportToJson(PluginContext context, DeclareMap model, File file) throws IOException {

@@ -13,10 +13,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-@Plugin(name = "Janus Miner (Import from Disk)", parameterLabels = { "Filename" }, returnLabels = {
+@Plugin(name = "DeclareMap model (Import from Disk)", parameterLabels = { "Filename" }, returnLabels = {
 		"Declare Process Model" }, returnTypes = { DeclareMap.class })
 @UIImportPlugin(description = "declare model as XML", extensions = { "xml" })
-public class JanusMinerXMLImport extends AbstractImportPlugin {
+public class DeclareMapXMLImport extends AbstractImportPlugin {
+	//Maybe this plugin is redundant
 
 	protected FileNameExtensionFilter getFileFilter() {
 		return new FileNameExtensionFilter("XML files", "xml");

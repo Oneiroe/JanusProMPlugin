@@ -13,10 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Plugin(name = "Janus Miner (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
+@Plugin(name = "DeclareMap model (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
 		"Process model", "Output File" }, userAccessible = true)
 @UIExportPlugin(description = "declare model as CSV", extension = "csv")
-public class JanusMinerCSVExport {
+public class DeclareMapCSVExport {
 
 	@PluginVariant(variantLabel = "CSV export", requiredParameterLabels = { 0, 1 })
 	public void exportToCSV(PluginContext context, DeclareMap model, File file) throws IOException {
