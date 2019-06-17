@@ -30,8 +30,9 @@ public class JanusMiner extends JanusMinerAlgorithm {
 	 * @return The output.
 	 */
 	@UITopiaVariant(affiliation = "Vienna University of Economics and Business", author = "Alessio Cecconi", email = "alessio.cecconi@wu.ac.at")
-	@PluginVariant(variantLabel = "Your plug-in name, Janus dialog", requiredParameterLabels = { 0 })
+	@PluginVariant(variantLabel = "Janus Miner with dialog", requiredParameterLabels = { 0 })
 	public DeclareMap parametricFlowUI(UIPluginContext context, XLog inputLog) {
+		// undetermined progress bar
 		context.getProgress().setIndeterminate(true);
 		// Create default inputs.
 		JanusMinerParameters params = new JanusMinerParameters();
