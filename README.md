@@ -1,2 +1,2 @@
-# JanusProMPlugin
-Janus plugin for ProM
+# Janus ProM Plugin
+Janus plugin for [ProM](http://www.promtools.org)
