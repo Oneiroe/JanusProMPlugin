@@ -20,7 +20,7 @@ public class MegaMatrixMonsterJsonAggregatedExport {
 		JanusOutputManagementLauncher outManager = new JanusOutputManagementLauncher();
 
 		//			Aggregated Log measures
-		outManager.exportEncodedAggregatedMeasuresToJson(matrix, outputFile);
+		outManager.exportAggregatedMeasuresToJson(matrix, outputFile);
 	}
 
 }

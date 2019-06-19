@@ -20,7 +20,7 @@ public class MegaMatrixMonsterCSVAggregatedExport {
 		JanusOutputManagementLauncher outManager = new JanusOutputManagementLauncher();
 
 		//			Aggregated Log measures
-		outManager.exportEncodedAggregatedMeasuresToCSV(matrix, outputFile);
+		outManager.exportAggregatedMeasuresToCSV(matrix, outputFile);
 	}
 
 }
