@@ -20,7 +20,7 @@ public class MegaMatrixMonsterJsonExport {
 		JanusOutputManagementLauncher outManager = new JanusOutputManagementLauncher();
 
 		//			Detailed traces results
-		outManager.exportEncodedReadable3DMatrixToJson(matrix, outputFile);
+		outManager.exportReadable3DMatrixToJson(matrix,outputFile);
 	}
 
 }

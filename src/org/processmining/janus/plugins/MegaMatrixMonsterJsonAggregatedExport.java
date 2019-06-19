@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Plugin(name = "Aggregated Mega Matrix Monster (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
 		"Mega matrix Monster", "Output File" }, userAccessible = true)
-@UIExportPlugin(description = "Mega Matrix Monster as Json", extension = "json")
+@UIExportPlugin(description = "Aggregated Mega Matrix Monster as Json", extension = "json")
 public class MegaMatrixMonsterJsonAggregatedExport {
 
 	@PluginVariant(variantLabel = "Aggregated Json export", requiredParameterLabels = { 0, 1 })

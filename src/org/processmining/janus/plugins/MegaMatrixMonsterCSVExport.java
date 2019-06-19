@@ -20,7 +20,7 @@ public class MegaMatrixMonsterCSVExport {
 		JanusOutputManagementLauncher outManager = new JanusOutputManagementLauncher();
 
 		//			Detailed traces results
-		outManager.exportEncodedReadable3DMatrixToCSV(matrix, outputFile);
+		outManager.exportReadable3DMatrixToCSV(matrix, outputFile);
 	}
 
 }
