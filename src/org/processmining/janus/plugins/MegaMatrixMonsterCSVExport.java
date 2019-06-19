@@ -13,17 +13,14 @@ import java.io.IOException;
 @Plugin(name = "Mega Matrix Monster (Export to Disk)", returnLabels = {}, returnTypes = {}, parameterLabels = {
 		"Mega matrix Monster", "Output File" }, userAccessible = true)
 @UIExportPlugin(description = "Mega Matrix Monster as CSV", extension = "csv")
-public class MegaMatrixMonsterExport {
+public class MegaMatrixMonsterCSVExport {
 
 	@PluginVariant(variantLabel = "CSV export", requiredParameterLabels = { 0, 1 })
 	public void exportToCSV(PluginContext context, MegaMatrixMonster matrix, File outputFile) throws IOException {
 		JanusOutputManagementLauncher outManager = new JanusOutputManagementLauncher();
 
 		//			Detailed traces results
-//		outManager.exportEncodedReadable3DMatrixToCSV(matrix, outputFile);
-
-		//			Aggregated Log measures
-		outManager.exportEncodedAggregatedMeasuresToCSV(matrix, outputFile);
+		outManager.exportEncodedReadable3DMatrixToCSV(matrix, outputFile);
 	}
 
 }
