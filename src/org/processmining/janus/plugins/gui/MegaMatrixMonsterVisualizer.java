@@ -15,7 +15,9 @@ import org.processmining.framework.plugin.annotations.PluginVariant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,14 +37,26 @@ public class MegaMatrixMonsterVisualizer extends SlickerTabbedPane {
 	private MegaMatrixMonster matrix;
 	private DescriptiveStatistics[][] aggregatedMatrix;
 	private java.util.List<SeparatedAutomatonOfflineRunner> automata;
+	private List<MegaMatrixMonsterBytesRowVisualizer> tracesByteVisualizerList;
 
 	@PluginVariant(requiredParameterLabels = { 0 })
 	public JComponent runUI(UIPluginContext context, MegaMatrixMonster matrix) {
 		this.matrix = matrix;
 		this.aggregatedMatrix = matrix.getConstraintLogMeasures();
 		this.automata = (List) matrix.getAutomata();
+
+		populateConstraints();
 		initComponents();
 		return this;
+	}
+
+	private void populateConstraints() {
+		this.tracesByteVisualizerList = new LinkedList<MegaMatrixMonsterBytesRowVisualizer>();
+
+		for (int i = 0; i < matrix.getMatrix().length; i++) {
+			MegaMatrixMonsterBytesRowVisualizer visualizer = new MegaMatrixMonsterBytesRowVisualizer(i, matrix);
+			tracesByteVisualizerList.add(visualizer);
+		}
 	}
 
 	public MegaMatrixMonsterVisualizer() {
@@ -54,19 +68,18 @@ public class MegaMatrixMonsterVisualizer extends SlickerTabbedPane {
 
 	private void initComponents() {
 		/* add everything to the gui */
-		addTab("Overall Details", prepareGeneralDetails());
+		addTab("Aggregated Measures", prepareAggregatedMeasures());
 		//		addTab("Trace/Constraints Details", null);
-		//		addTab("Trace/Constraints Overview", null);
+		addTab("MegaMatrixMonster view", prepareMegaMatrixMonsterBigPicture());
 	}
 
 	/**
 	 * Tab with :
-	 * - overall measures between log and declare model
 	 * - the list of constraints and their overall measures
 	 *
 	 * @return page containing the overall measures
 	 */
-	private JPanel prepareGeneralDetails() {
+	private JPanel prepareAggregatedMeasures() {
 		GridBagConstraints c;
 
 		/* overall details */
@@ -191,4 +204,73 @@ public class MegaMatrixMonsterVisualizer extends SlickerTabbedPane {
 		return overallDetails;
 	}
 
+	/**
+	 * Tab with:
+	 * - mega matrix monster in all its details
+	 *
+	 * @return page containing the mega matrix monster colored-bytes view
+	 */
+	private JPanel prepareMegaMatrixMonsterBigPicture() {
+
+		/* title */
+		JPanel titleContainer = new JPanel(new BorderLayout());
+		titleContainer.setOpaque(false);
+		titleContainer.add(GUIUtils.prepareTitle("Trace/constraints details"), BorderLayout.WEST);
+
+		/* trace */
+		RoundedPanel traceDetails = new RoundedPanel(15, 5, 3);
+		traceDetails.setLayout(new BorderLayout());
+		traceDetails.setBackground(GUIUtils.panelBackground);
+		traceDetails.add(titleContainer, BorderLayout.NORTH);
+
+		JPanel tracesContainer = new JPanel();
+		tracesContainer.setOpaque(false);
+		tracesContainer.setLayout(new GridBagLayout());
+
+		JScrollPane tracesScrollerContainer = new JScrollPane(tracesContainer);
+		tracesScrollerContainer.setOpaque(false);
+		tracesScrollerContainer.getViewport().setOpaque(false);
+		tracesScrollerContainer.getVerticalScrollBar()
+				.setUI(new SlickerScrollBarUI(tracesScrollerContainer.getVerticalScrollBar(), GUIUtils.panelBackground,
+						GUIUtils.panelTextColor, GUIUtils.panelTextColor.brighter(), 4, 11));
+		tracesScrollerContainer.getHorizontalScrollBar()
+				.setUI(new SlickerScrollBarUI(tracesScrollerContainer.getHorizontalScrollBar(),
+						GUIUtils.panelBackground, GUIUtils.panelTextColor, GUIUtils.panelTextColor.brighter(), 4, 11));
+		tracesScrollerContainer.setBorder(BorderFactory.createEmptyBorder());
+		tracesScrollerContainer.getVerticalScrollBar().setUnitIncrement(30);
+		traceDetails.add(tracesScrollerContainer, BorderLayout.CENTER);
+
+		refreshTraces(tracesContainer, null);
+
+		return traceDetails;
+	}
+
+	private void refreshTraces(JPanel tracesContainer, Comparator<MegaMatrixMonsterBytesRowVisualizer> comparator) {
+
+		tracesContainer.removeAll();
+
+		GridBagConstraints c;
+		GUIUtils.addToGridBagLayout(0, 0, tracesContainer, Box.createVerticalStrut(10));
+		int i = 1;
+
+		for (MegaMatrixMonsterBytesRowVisualizer visualizer : tracesByteVisualizerList) {
+			String traceName = visualizer.getTraceName();
+
+			c = new GridBagConstraints();
+			c.anchor = GridBagConstraints.WEST;
+			c.fill = GridBagConstraints.BOTH;
+			c.weightx = 1;
+
+			GUIUtils.addToGridBagLayout(0, i, tracesContainer, GUIUtils.prepareTitleBordered(traceName), c);
+			GUIUtils.addToGridBagLayout(0, i + 1, tracesContainer, visualizer, c);
+			GUIUtils.addToGridBagLayout(0, i + 2, tracesContainer, Box.createVerticalStrut(10));
+
+			i += 2;
+
+		}
+
+		GUIUtils.addToGridBagLayout(0, i + 2, tracesContainer, Box.createVerticalGlue(), 0, 1);
+
+		tracesContainer.updateUI();
+	}
 }

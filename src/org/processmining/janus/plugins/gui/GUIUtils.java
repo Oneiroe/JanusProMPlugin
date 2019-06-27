@@ -18,7 +18,7 @@ import org.processmining.framework.util.ui.scalableview.VerticalLabelUI;
 import com.fluxicon.slickerbox.factory.SlickerFactory;
 
 /**
- * From:
+ * Forked From:
  *
  * DeclareAnlyzer
  * https://svn.win.tue.nl/repos/prom/Packages/DeclareAnalyzer/
@@ -40,6 +40,7 @@ public class GUIUtils {
 	public static Color event = Color.lightGray;
 	public static Color eventViolated = new Color(200, 0, 0);
 	public static Color eventFulfilled = new Color(0, 200, 0);
+	public static Color eventStrange = Color.darkGray;
 	public static Color eventConflict = Color.orange;
 	
 	public static Color resolutionEvent = new Color(event.getRed(), event.getGreen(), event.getBlue(), 100);
