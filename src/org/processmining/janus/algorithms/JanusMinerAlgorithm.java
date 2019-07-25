@@ -17,8 +17,6 @@ import org.apache.commons.cli.Options;
 import org.deckfour.xes.model.XLog;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.janus.parameters.JanusMinerParameters;
-import org.processmining.janus.parameters.JanusMinerSelfishParameters;
-import org.processmining.plugins.declareminer.importing.DeclareModelImportPlugin;
 import org.processmining.plugins.declareminer.visualizing.DeclareMap;
 
 import java.io.IOException;
@@ -66,71 +64,6 @@ public class JanusMinerAlgorithm {
 	}
 
 	/**
-	 * Launch Janus miner through its Jar
-	 *
-	 * @return
-	 */
-	public DeclareMap applyJarParametric(PluginContext context, JanusMinerSelfishParameters params) {
-
-		System.out
-				.println(
-						"java -jar /home/alessio/Data/Phd/my_code/Janus ProM Plugin/ProM/src-Plugins/Janus/lib/MINERful.jar minerful.MinerFulMinerStarter -iLF "
-								+ params.getInputLog().toString()
-								+ " -s " + params.getSupport().toString()
-								+ " -c " + params.getConfidence().toString()
-								+ " -CSV " + params.getOutputFilePath().toString() + ".csv"
-								+ " -condec" + params.getOutputFilePath().toString() + ".xml");
-
-		// Run a java app in a separate system process
-		Process proc = null;
-		System.out.println();
-		try {
-			proc = Runtime.getRuntime().exec(new String[] {
-					"java",
-					"-jar",
-					"/home/alessio/Data/Phd/my_code/Janus ProM Plugin/ProM/src-Plugins/Janus/lib/MINERful.jar",
-					"minerful.MinerFulMinerStarter",
-					"-iLF", params.getInputLog().toString(),
-					"-s", params.getSupport().toString(),
-					" -c ", params.getConfidence().toString(),
-					"-CSV", params.getOutputFilePath().toString() + ".csv",
-					"-condec", params.getOutputFilePath().toString() + ".xml"
-			});
-
-			//wait process ending
-			proc.waitFor();
-
-			// Then retrieve the process output (or error)
-			InputStream is = proc.getInputStream();
-			byte b[] = new byte[is.available()];
-			is.read(b, 0, b.length);
-			System.out.println(new String(b));
-
-			InputStream err = proc.getErrorStream();
-			byte be[] = new byte[err.available()];
-			err.read(be, 0, be.length);
-			System.out.println(new String(be));
-
-		} catch (IOException e) {
-			System.out.println("Exception in jar running");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		// load output as DeclareMap
-		//		params.getOutputFilePath().toString() + ".xml"
-		DeclareMap res = null;
-		try {
-			res = (DeclareMap) new DeclareModelImportPlugin()
-					.importFile(context, params.getOutputFilePath().toString() + ".xml");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
-
-	/**
 	 * Launch Janus miner importing its Jar and using its functions
 	 *
 	 * @return
@@ -149,7 +82,7 @@ public class JanusMinerAlgorithm {
 		};
 
 		// START MINERful MAIN
-//		JanusMinerStarter minerMinaStarter = new JanusMinerStarter();
+		//		JanusMinerStarter minerMinaStarter = new JanusMinerStarter();
 		JanusOfflineMinerStarter minerMinaStarter = new JanusOfflineMinerStarter(); // faster
 
 		Options cmdLineOptions = minerMinaStarter.setupOptions();
@@ -184,10 +117,12 @@ public class JanusMinerAlgorithm {
 			System.exit(0);
 		}
 
-		LogEventClassifier.ClassificationType classiType = fromInputParamToXesLogClassificationType(inputParams.eventClassification);
+		LogEventClassifier.ClassificationType classiType = fromInputParamToXesLogClassificationType(
+				inputParams.eventClassification);
 		LogParser logParser = new XesLogParser(inputLog, classiType);
 
-		ProcessModel minerfulProcessModel = minerMinaStarter.mine(logParser, inputParams, minerFulParams, postParams, logParser.getTaskCharArchive());
+		ProcessModel minerfulProcessModel = minerMinaStarter
+				.mine(logParser, inputParams, minerFulParams, postParams, logParser.getTaskCharArchive());
 
 		DeclareMapEncoderDecoder encoder = new DeclareMapEncoderDecoder(minerfulProcessModel);
 
