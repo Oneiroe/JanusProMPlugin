@@ -27,7 +27,7 @@
         <dependency org="org.apache.commons" name="commons-csv" rev="1.6"/>
         <!-- Third party library downloaded from ProM library. -->
         <!-- dependency conf="lib->default" org="prom-libs" name="opencsv" rev="2.4-patched" transitive="false" /-->
-        <dependency org="" name="Janus" transitive="false"/>
+        <dependency org="" name="Janus" rev="latest" transitive="false"/>
         <!--        <dependency org="" name="MINERful" transitive="false"/>-->
     </dependencies>
 </ivy-module>
